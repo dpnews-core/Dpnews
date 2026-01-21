@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEXTILE INTELLIGENCE | DP NEWS Bureau</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --slate-950: #020617; --slate-900: #0f172a; --accent: #3b82f6; }
+        body { background-color: var(--slate-950); color: #f1f5f9; font-family: 'Outfit', sans-serif; }
+        .glass-panel { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
+        
+        /* Smooth scrolling for ticker */
+        .ticker-container { overflow: hidden; white-space: nowrap; }
+        .ticker-content { display: inline-block; animation: scroll 30s linear infinite; }
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        /* Post Card Hover */
+        .post-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .post-card:hover { transform: scale(1.02); border-color: var(--accent); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="bg-blue-600 text-white py-2 border-b border-blue-400/20">
+        <div class="ticker-container">
+            <div class="ticker-content text-[10px] font-black uppercase tracking-widest">
+                <span class="mx-8">LATEST: Ring Road Traders Association announces new credit terms</span>
+                <span class="mx-8">YARN ALERT: Polyester FDY sees price hike of ₹2.50/kg</span>
+                <span class="mx-8">EXPORT: Surat Textile Hub crosses ₹500Cr monthly target</span>
+                <span class="mx-8">EVENT: Global Textile Expo 2026 dates finalized for Surat</span>
+            </div>
+        </div>
+    </div>
+
+    <nav class="sticky top-0 z-50 glass-panel px-6 py-4">
+        <div class="max-w-[1400px] mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="w-10 h-10 bg-blue-600 flex items-center justify-center rounded-lg">
+                    <span class="iconify text-xl" data-icon="lucide:home"></span>
+                </a>
+                <h1 class="text-xl font-black tracking-tight">TEXTILE<span class="text-blue-500">FEED</span></h1>
+            </div>
+            <div class="hidden md:flex gap-6 text-[11px] font-black uppercase tracking-widest text-slate-400">
+                <span id="live-clock">--:--:--</span>
+                <span class="text-blue-500 flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span> DATA SYNC ACTIVE
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-[1400px] mx-auto px-4 md:px-6 py-10">
+        <div class="grid lg:grid-cols-12 gap-8">
+            
+            <div class="lg:col-span-8">
+                
+                <div class="relative rounded-3xl overflow-hidden mb-12 border border-white/10">
+                    <img src="https://images.unsplash.com/photo-1524292332627-7e9095137e38?q=80&w=1200" class="w-full h-[450px] object-cover opacity-60">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 p-8 flex flex-col justify-end">
+                        <span class="bg-blue-600 text-[10px] font-black px-3 py-1 rounded w-fit mb-4">HEADLINE REPORT</span>
+                        <h2 class="text-4xl md:text-5xl font-black mb-4 leading-tight">GST Impact: New Circulars for Surat Textile Jobwork.</h2>
+                        <div class="flex items-center gap-4 text-xs font-bold text-slate-400">
+                            <span class="flex items-center gap-1"><span class="iconify" data-icon="lucide:user"></span> Dipak Bhamre</span>
+                            <span class="flex items-center gap-1"><span class="iconify" data-icon="lucide:calendar"></span> Jan 14, 2026</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-8">
+                    <h3 class="text-xl font-black flex items-center gap-2 italic">
+                        <span class="iconify text-blue-500" data-icon="lucide:layers"></span> LATEST FEED
+                    </h3>
+                </div>
+
+                <div id="textile-post-container" class="grid md:grid-cols-2 gap-6">
+                    <div class="animate-pulse bg-slate-900 h-64 rounded-2xl"></div>
+                    <div class="animate-pulse bg-slate-900 h-64 rounded-2xl"></div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-4 space-y-6">
+                <div class="glass-panel p-6 rounded-3xl">
+                    <h4 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-6">Live Yarn Rates</h4>
+                    <div class="space-y-4" id="yarn-rates">
+                        </div>
+                </div>
+
+                <div class="bg-blue-600/10 border border-blue-500/20 p-6 rounded-3xl">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center font-black">DB</div>
+                        <div>
+                            <p class="text-[10px] text-blue-400 font-black uppercase italic tracking-widest">Bureau Chief</p>
+                            <h4 class="font-bold">Dipak Bhamre</h4>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/91" class="block w-full py-4 bg-blue-600 hover:bg-blue-700 text-center rounded-xl font-black text-[10px] uppercase tracking-[0.2em] transition">
+                        Direct News Line
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 1. LIVE CLOCK
+        function updateTime() {
+            document.getElementById('live-clock').innerText = new Date().toLocaleTimeString();
+        }
+        setInterval(updateTime, 1000);
+
+        // 2. WORKING MARKET RATES
+        const commodities = [
+            { name: "Polyester FDY", price: 112, trend: "up" },
+            { name: "Nylon 6", price: 145, trend: "down" },
+            { name: "Cotton 40s", price: 290, trend: "up" }
+        ];
+
+        function updateRates() {
+            const container = document.getElementById('yarn-rates');
+            container.innerHTML = commodities.map(c => {
+                const fluctuation = (Math.random() * 2).toFixed(2);
+                return `
+                    <div class="flex justify-between items-center border-b border-white/5 pb-3">
+                        <span class="text-sm font-bold text-slate-300">${c.name}</span>
+                        <div class="text-right">
+                            <div class="text-sm font-black mono tracking-tight text-white">₹${(c.price + parseFloat(fluctuation)).toFixed(2)}</div>
+                            <div class="text-[9px] font-bold ${c.trend === 'up' ? 'text-green-500' : 'text-red-500'} uppercase">
+                                ${c.trend === 'up' ? '▲' : '▼'} ${fluctuation}%
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        setInterval(updateRates, 3000);
+        updateRates();
+
+        // 3. AUTO-FEED POSTS (Working logic)
+        const posts = [
+            {
+                title: "Powerloom Modernization Subsidy: How to apply before the March deadline.",
+                cat: "SCHEMES",
+                img: "https://images.unsplash.com/photo-1516738901171-8eb4fc13bd20?q=80&w=600"
+            },
+            {
+                title: "Direct Export from Surat to Dubai: New logistics partner announced.",
+                cat: "TRADE",
+                img: "https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=600"
+            },
+            {
+                title: "Surat Textile Market Holiday Calendar for 2026 Released.",
+                cat: "CITY",
+                img: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=600"
+            },
+            {
+                title: "Digital Printing Units face 10% hike in ink import duties.",
+                cat: "INDUSTRY",
+                img: "https://images.unsplash.com/photo-1562648107-1990967bd394?q=80&w=600"
+            }
+        ];
+
+        function renderPosts() {
+            const container = document.getElementById('textile-post-container');
+            container.innerHTML = posts.map(p => `
+                <div class="glass-panel rounded-3xl overflow-hidden post-card cursor-pointer group">
+                    <div class="h-48 relative overflow-hidden">
+                        <span class="absolute top-4 left-4 z-10 bg-blue-600 text-[9px] font-black px-2 py-1 rounded uppercase tracking-tighter">${p.cat}</span>
+                        <img src="${p.img}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700 opacity-80">
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-lg font-bold leading-tight mb-4 group-hover:text-blue-400 transition">${p.title}</h4>
+                        <div class="flex justify-between items-center text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                            <span>Read Report</span>
+                            <span class="iconify text-xl" data-icon="lucide:arrow-right"></span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        renderPosts();
+    </script>
+</body>
+</html>

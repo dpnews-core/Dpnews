@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DP NEWS | Intelligence Bureau</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --accent: #ef4444;
+            --text-main: #f8fafc;
+        }
+        body { background-color: var(--bg-dark); color: var(--text-main); font-family: 'Outfit', sans-serif; }
+        .serif { font-family: 'Playfair Display', serif; }
+        .live-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        .ticker-wrap { overflow: hidden; white-space: nowrap; }
+        .ticker-content { display: inline-block; animation: scroll 40s linear infinite; }
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .widget-card { transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.05); }
+        .widget-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5); }
+        .image-grayscale { filter: grayscale(100%); transition: filter 0.5s ease; }
+        .image-grayscale:hover { filter: grayscale(0%); }
+    </style>
+</head>
+<body class="antialiased selection:bg-red-500 selection:text-white">
+
+    <div id="mobile-menu" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="toggleMenu()"></div>
+        <div class="absolute right-0 top-0 h-full w-[85%] max-w-[300px] bg-[#0f172a] border-l border-white/10 p-8 shadow-2xl flex flex-col">
+            <div class="flex justify-between items-center mb-10 text-white">
+                <span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Navigation</span>
+                <button onclick="toggleMenu()"><span class="iconify text-3xl" data-icon="lucide:x"></span></button>
+            </div>
+            <nav class="flex flex-col gap-6 text-xl font-black uppercase tracking-tight">
+                <a href="#" class="text-red-500 flex justify-between items-center">Home <span class="iconify" data-icon="lucide:chevron-right"></span></a>
+                <a href="textilenews.html" class="hover:text-red-500 flex justify-between items-center transition">Textile News <span class="iconify" data-icon="lucide:chevron-right"></span></a>
+                <a href="about.html" class="hover:text-red-500 flex justify-between items-center transition">The Editor <span class="iconify" data-icon="lucide:chevron-right"></span></a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="bg-black border-b border-white/10 px-4 py-2 flex justify-between items-center text-[10px] font-bold tracking-widest text-slate-400">
+        <div class="flex gap-4">
+            <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> ONLINE</span>
+            <span id="system-clock">00:00:00 IST</span>
+        </div>
+        <div class="hidden md:flex gap-4">
+            <span id="weather-widget">SURAT --°C</span>
+            <span class="text-red-500 tracking-tighter">BUREAU ACTIVE</span>
+        </div>
+    </div>
+
+    <nav class="sticky top-0 z-50 bg-[#0f172a]/95 backdrop-blur-xl border-b border-white/10 px-4 md:px-8 py-4">
+        <div class="max-w-[1400px] mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-red-600 flex items-center justify-center font-black text-xl text-white rounded-sm shadow-lg shadow-red-600/20">DP</div>
+                <div class="leading-none">
+                    <h1 class="font-black text-xl tracking-tight uppercase">DP News</h1>
+                    <span class="text-[9px] uppercase tracking-[0.2em] text-slate-500 font-bold block mt-0.5">Surat City Bureau</span>
+                </div>
+            </div>
+            <div class="hidden lg:flex gap-8 text-[11px] font-black uppercase tracking-widest text-slate-400">
+                <a href="textilenews.html" class="hover:text-white transition">Textile</a>
+                <a href="#" class="hover:text-white transition">Diamond</a>
+                <a href="#" class="hover:text-white transition">Politics</a>
+                <div class="flex items-center gap-2 border-l border-white/10 pl-8">
+                    <span class="w-2 h-2 rounded-full bg-green-500 online-blink"></span>
+                    <span class="text-white">Editor: Dipak Bhamre</span>
+                </div>
+            </div>
+            <button class="lg:hidden text-2xl text-white" onclick="toggleMenu()"><span class="iconify" data-icon="lucide:menu"></span></button>
+        </div>
+    </nav>
+
+    <div class="bg-red-700 text-white py-2 overflow-hidden border-b border-white/10">
+        <div class="ticker-wrap"><div class="ticker-content text-xs font-black uppercase tracking-[0.15em]" id="live-ticker-content">LOADING BUREAU UPDATES...</div></div>
+    </div>
+
+    <main class="max-w-[1400px] mx-auto px-4 md:px-6 py-8 md:py-12">
+        <div class="grid lg:grid-cols-12 gap-8 md:gap-12">
+            
+            <div class="lg:col-span-8 space-y-12">
+                <div class="relative group cursor-pointer rounded-3xl overflow-hidden border border-white/10">
+                    <div class="absolute top-6 left-6 z-10 bg-red-600 text-white text-[10px] font-black px-4 py-1.5 uppercase tracking-widest rounded-full live-pulse">Breaking</div>
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200" class="w-full h-[400px] md:h-[600px] object-cover group-hover:scale-105 transition duration-700 opacity-60">
+                    <div class="absolute bottom-0 left-0 p-8 md:p-16 w-full bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent">
+                        <h2 class="serif text-4xl md:text-7xl text-white font-medium leading-[0.9] mb-6">The New Surat <br> <span class="italic">Skyline.</span></h2>
+                        <p class="text-slate-300 text-sm md:text-xl max-w-xl leading-relaxed">Exclusive coverage on the new commercial zones approved in Sagrampura and how they impact local textile traders.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                    <h3 class="font-black text-xl flex items-center gap-3 italic uppercase tracking-tighter">Live Wire</h3>
+                    <span class="text-[10px] font-bold text-slate-500 bg-slate-800 px-3 py-1 rounded-full">Automated Feed</span>
+                </div>
+                <div id="news-grid" class="grid md:grid-cols-2 gap-6"></div>
+            </div>
+<!-- YOUTUBE SECTION -->
+<section class="max-w-7xl mx-auto px-4 py-16">
+  <h2 class="text-2xl font-extrabold mb-4">Latest News Videos</h2>
+  <p class="text-gray-400 mb-6">
+    Watch the latest interviews, ground reports, and updates from our official YouTube channel.
+  </p>
+
+<!-- YOUTUBE SECTION -->
+
+<!-- AUTO YOUTUBE CHANNEL (UPLOADS) -->
+
+
+<iframe
+  width="100%"
+  height="480"
+  src="https://www.youtube.com/embed/videoseries?list=UULe8xapZn7uszoijXiaxwMQ"
+  frameborder="0"
+  allowfullscreen>
+</iframe>
+
+    <!-- FIXED VIDEOS (DO NOT CHANGE) -->
+    <iframe
+      class="w-full rounded-xl border border-white/10"
+      height="480"
+      src="https://www.youtube.com/embed/H4EZ915Stfo"
+      frameborder="0"
+      allowfullscreen>
+    </iframe>
+
+    <iframe
+      class="w-full rounded-xl border border-white/10"
+      height="480"
+      src="https://www.youtube.com/embed/4vgOb6BpApo"
+      frameborder="0"
+      allowfullscreen>
+    </iframe>
+        <iframe
+      class="w-full rounded-xl border border-white/10"
+      height="480"
+      src="https://www.youtube.com/embed/o4qB8Yt6M0s"
+      frameborder="0"
+      allowfullscreen>
+    </iframe>
+     <iframe
+      class="w-full rounded-xl border border-white/10"
+      height="480"
+      src="https://www.youtube.com/embed/XoIcoYYEEAE"
+      frameborder="0"
+      allowfullscreen>
+    </iframe>
+     <iframe
+      class="w-full rounded-xl border border-white/10"
+      height="480"
+      src="https://www.youtube.com/embed/taB3OZ0wAO8"
+      frameborder="0"
+      allowfullscreen>
+    </iframe>
+     <iframe
+      class="w-full rounded-xl border border-white/10"
+      height="480"
+      src="https://www.youtube.com/embed/cip2YYCqTdo"
+      frameborder="0"
+      allowfullscreen>
+    </iframe>
+     <iframe
+      class="w-full rounded-xl border border-white/10"
+      height="480"
+      src="https://www.youtube.com/embed/e416FOSvXsc"
+      frameborder="0"
+      allowfullscreen>
+    </iframe>
+     <iframe
+      class="w-full rounded-xl border border-white/10"
+      height="480"
+      src="https://www.youtube.com/embed/x_DA8xs6TM0"
+      frameborder="0"
+      allowfullscreen>
+    </iframe>
+     <iframe
+      class="w-full rounded-xl border border-white/10"
+      height="480"
+      src="https://www.youtube.com/embed/x_DA8xs6TM0"
+      frameborder="0"
+      allowfullscreen>
+    </iframe>
+
+</section>
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-[#1e293b] p-8 rounded-3xl widget-card border-l-4 border-red-600">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="w-14 h-14 rounded-full bg-slate-800 border-2 border-red-600 flex items-center justify-center text-2xl">💢</div>
+                        <div>
+                            <div class="text-[10px] text-red-500 font-black uppercase tracking-widest">Bureau Chief</div>
+                            <div class="font-bold text-xl text-white tracking-tight">Dipak Bhamre</div>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <a href="tel:+919427004808" class="w-full bg-white/5 hover:bg-white/10 text-white py-4 rounded-xl text-xs font-black uppercase tracking-widest flex items-center justify-center gap-3 transition">
+                            <span class="iconify text-xl" data-icon="lucide:phone"></span> Call Bureau
+                        </a>
+                        <a href="https://wa.me/919427004808" class="w-full bg-green-600/20 hover:bg-green-600/30 text-green-400 py-4 rounded-xl text-xs font-black uppercase tracking-widest flex items-center justify-center gap-3 transition border border-green-600/20">
+                            <span class="iconify text-xl" data-icon="lucide:message-circle"></span> WhatsApp Tips
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-[#1e293b] p-8 rounded-3xl widget-card">
+                    <h4 class="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em] mb-8">Market Intelligence</h4>
+                    <div class="space-y-6">
+                        <div class="flex justify-between items-center">
+                            <div><div class="text-sm font-bold text-white uppercase">Gold 24K</div><div class="text-[10px] text-slate-500 italic">Surat Spot Price</div></div>
+                            <div class="text-right"><div class="font-mono font-bold text-lg text-yellow-500" id="gold-price">₹--</div></div>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-white/5 pt-6">
+                            <div><div class="text-sm font-bold text-white uppercase" id="diamond">Diamond</div><div class="text-[10px] text-slate-500 italic">1ct VVS1</div></div>
+                            <div class="text-right"><div class="font-mono font-bold text-lg text-blue-400" id="diamond-price">₹--</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+          
+        </div>
+
+        <section class="mt-32 py-20 border-t border-white/10">
+            <div class="grid lg:grid-cols-12 gap-16 items-center">
+                <div class="lg:col-span-5">
+                    <div class="relative group">
+                        <img src="https://images.pexels.com/photos/60777/pexels-photo-60777.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="rounded-3xl image-grayscale border border-white/10 w-full h-[500px] object-cover shadow-2xl">
+                        <div class="absolute -bottom-6 -right-6 bg-red-600 p-6 rounded-2xl hidden md:block">
+                            <span class="iconify text-4xl text-white" data-icon="lucide:quote"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-7 space-y-8">
+                    <span class="text-red-600 font-black text-xs uppercase tracking-[0.5em]">The Editor's Desk</span>
+                    <h2 class="serif text-5xl md:text-7xl text-white leading-tight">Truth is the only <br> <span class="italic text-slate-400">Authority.</span></h2>
+                    <p class="text-slate-400 text-lg leading-relaxed max-w-2xl">
+                        Dipak Bhamre has served as the anchor of Surat's textile and trade journalism for over two decades. Under his leadership, DP News has transformed into a high-speed digital bureau, providing verified intelligence to over 1.2 million monthly readers across the South Gujarat belt.
+                    </p>
+
+                    <div class="flex gap-6 pt-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-black text-white italic">20+</div>
+                            <div class="text-[9px] uppercase font-bold text-slate-500 tracking-widest">Experience</div>
+                        </div>
+                        <div class="w-[1px] h-10 bg-white/10"></div>
+                        <div class="text-center">
+                            <div class="text-2xl font-black text-white italic">Surat</div>
+                            <div class="text-[9px] uppercase font-bold text-slate-500 tracking-widest">Headquarters</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-black py-12 text-center border-t border-white/5">
+        <h2 class="font-black text-2xl text-white mb-4 tracking-tighter uppercase">DP News</h2>
+        <div class="text-[10px] text-slate-600 font-bold uppercase tracking-[0.4em]">&copy; 2026 Dipak Bhamre Media Group</div>
+    </footer>
+
+<script>
+    // --- BUREAU API CONFIG ---
+    const FB_PAGE_ID = 'YOUR_PAGE_ID'; 
+    const FB_ACCESS_TOKEN = 'YOUR_ACCESS_TOKEN'; // Keep this safe!
+    const FB_API_URL = `https://graph.facebook.com/${FB_PAGE_ID}/posts?fields=message,created_time,full_picture,permalink_url&limit=6&access_token=${FB_ACCESS_TOKEN}`;
+
+    function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
+    
+    function updateSystem() { 
+        document.getElementById('system-clock').innerText = new Date().toLocaleTimeString('en-US', { hour12: false }) + " IST"; 
+    }
+    setInterval(updateSystem, 1000);
+
+    // --- FETCH LIVE FACEBOOK DATA ---
+    async function renderFeed() {
+        const container = document.getElementById('news-grid');
+        container.innerHTML = `<div class="col-span-2 text-center py-20 opacity-50 uppercase font-black tracking-[0.5em] animate-pulse text-xs">Accessing Facebook Data Stream...</div>`;
+
+        try {
+            const response = await fetch(FB_API_URL);
+            const data = await response.json();
+            
+            if (!data.data || data.data.length === 0) throw new Error("No posts found");
+
+            container.innerHTML = data.data.map(post => {
+                // Formatting the Date
+                const postDate = new Date(post.created_time).toLocaleDateString('en-GB', { 
+                    day: '2-digit', month: 'short' 
+                });
+                
+                // Using a fallback image if post has no photo
+                const image = post.full_picture || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200';
+                
+                return `
+                <div class="bg-[#1e293b] rounded-3xl overflow-hidden widget-card cursor-pointer group border-b-4 border-blue-600" onclick="window.open('${post.permalink_url}', '_blank')">
+                    <div class="h-56 relative overflow-hidden">
+                        <span class="absolute top-4 left-4 z-10 bg-blue-600 text-white text-[9px] font-black px-3 py-1 rounded-full uppercase flex items-center gap-1">
+                            <span class="iconify" data-icon="logos:facebook"></span> LIVE FEED
+                        </span>
+                        <img src="${image}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700 opacity-80">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
+                            <span class="text-[9px] text-slate-500 font-black uppercase tracking-widest">${postDate}</span>
+                        </div>
+                        <h3 class="font-bold text-xl text-white leading-tight group-hover:text-blue-400 transition mb-4 line-clamp-3">
+                            ${post.message || "News Update from DP Bureau..."}
+                        </h3>
+                        <div class="flex justify-between items-center text-[10px] font-bold text-blue-500 uppercase tracking-widest border-t border-white/5 pt-4">
+                            <span>Read on Facebook</span>
+                            <span class="iconify text-lg" data-icon="lucide:external-link"></span>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+
+            // Update Ticker with API Data
+            const tickerText = data.data.map(p => `• ${p.message ? p.message.substring(0, 50) + '...' : 'New Update'} `).join(' ');
+            document.getElementById('live-ticker-content').innerHTML = tickerText;
+
+        } catch (error) {
+            console.error("Bureau Sync Error:", error);
+            container.innerHTML = `<div class="col-span-2 text-center py-10 text-red-500 text-xs font-bold uppercase">Sync Offline. Using cached data.</div>`;
+        }
+    }
+
+    // Initialize
+    renderFeed();
+    fetchWeather();
+    setInterval(fluctuateMarkets, 3000);
+</script>
+
+
+</body>
+</html>

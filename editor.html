@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor's Desk | Dipak Bhamre</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { background-color: #020617; color: #f1f5f9; font-family: 'Outfit', sans-serif; }
+        .serif { font-family: 'Playfair Display', serif; }
+        .text-glow { text-shadow: 0 0 15px rgba(220, 38, 38, 0.5); }
+        .image-mask {
+            mask-image: linear-gradient(to top, transparent 5%, black 40%);
+            -webkit-mask-image: linear-gradient(to top, transparent 5%, black 40%);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-red-600">
+
+    <nav class="p-8 flex justify-between items-center max-w-[1400px] mx-auto w-full absolute top-0 left-0 right-0 z-50">
+        <a href="index.html" class="flex items-center gap-2 group">
+            <span class="iconify text-2xl group-hover:-translate-x-1 transition-transform" data-icon="lucide:arrow-left"></span>
+            <span class="text-xs font-black uppercase tracking-[0.3em]">Back to Feed</span>
+        </a>
+        <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+            <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">Editor is Online</span>
+        </div>
+    </nav>
+
+    <main class="min-h-screen flex flex-col justify-center items-center pt-24 pb-12">
+        <div class="max-w-[1400px] mx-auto px-6 grid lg:grid-cols-12 gap-16 items-center">
+            
+            <div class="lg:col-span-5 order-2 lg:order-1 relative">
+                <div class="relative z-10">
+                    <div class="rounded-3xl border border-white/10 overflow-hidden bg-slate-900 group">
+                       
+                    </div>
+
+                    
+                </div>
+                <div class="absolute -top-10 -left-10 w-40 h-40 bg-red-600/10 blur-[100px] rounded-full"></div>
+            </div>
+
+            <div class="lg:col-span-7 order-1 lg:order-2 space-y-10">
+                <div class="space-y-4">
+                    <span class="text-red-600 font-black text-xs uppercase tracking-[0.5em] block">The Editor-In-Chief</span>
+                    <h1 class="text-6xl md:text-8xl font-black tracking-tighter text-white leading-none">
+                        DIPAK <br> <span class="text-red-600 italic serif">BHAMRE.</span>
+                    </h1>
+                </div>
+
+                <div class="space-y-6">
+                    <p class="text-xl md:text-2xl text-slate-300 font-light leading-relaxed">
+                        Dipak Bhamre is the visionary architect behind <span class="text-white font-bold">DP NEWS</span>, a multi-platform digital bureau dedicated to uncovering the heartbeat of Surat city.
+                    </p>
+                    
+                    <div class="h-[1px] w-full bg-gradient-to-r from-white/10 to-transparent"></div>
+
+                    <p class="text-slate-400 leading-relaxed text-lg">
+                        Specializing in <span class="text-white font-medium">Institutional Journalism</span>, Dipak has spent over 20 years bridging the gap between raw city data and public knowledge. From the high-stakes trading floors of the Surat Diamond Bourse to the critical legislative decisions in the municipal corporation, his reporting is defined by a commitment to speed, accuracy, and local integrity.
+                    </p>
+                </div>
+
+               
+                </div>
+
+                <div class="flex flex-wrap gap-4 pt-8">
+                    <a href="https://wa.me/919427004808" class="bg-white text-black px-8 py-4 rounded-full font-black text-xs uppercase tracking-[0.2em] hover:bg-red-600 hover:text-white transition-all flex items-center gap-3">
+                        <span class="iconify text-xl" data-icon="lucide:message-square"></span>
+                        Send Tip via WhatsApp
+                    </a>
+                    <div class="flex gap-2">
+                        <a href="#" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 transition">
+                            <span class="iconify text-xl" data-icon="lucide:linkedin"></span>
+                        </a>
+                        <a href="#" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 transition">
+                            <span class="iconify text-xl" data-icon="lucide:facebook"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="max-w-[1400px] mx-auto px-6 py-12 flex justify-between items-center border-t border-white/5 opacity-40">
+        <p class="text-[10px] font-bold uppercase tracking-widest">Dipak Bhamre © 2026</p>
+        <p class="text-[10px] font-bold uppercase tracking-widest text-red-600">DP News Bureau Confidential</p>
+    </footer>
+
+</body>
+</html>
